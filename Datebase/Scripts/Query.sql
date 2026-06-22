@@ -4,7 +4,7 @@ go
 
 create table Department
 (
-	Department_ID int not null,
+	Department_ID int identity(1,1) not null,
 	Name varchar (50) not null,
 	Phone varchar(11) not null,
 	Location varchar(100) not null,
@@ -13,7 +13,7 @@ create table Department
 
 create table Nurse
 (
-	Nurse_ID int not null,
+	Nurse_ID int identity(1,1) not null,
 	First_Name varchar(20) not null,
 	Last_Name varchar(20) not null,
 	Phone varchar(11) not null,
@@ -24,7 +24,7 @@ create table Nurse
 
 create table Room
 (
-	Room_ID int not null,
+	Room_ID int identity(1,1) not null,
 	Room_No int not null UNIQUE,
 	Type varchar (15) not null,
 	Nurse_ID int not null,
@@ -34,11 +34,10 @@ create table Room
 
 create table Patient
 (
-	Patient_ID int not null,
+	Patient_ID int identity(1,1) not null,
 	First_Name varchar(25) not null,
 	Last_Name varchar(25) not null,
-	Gender varchar(10) not null,
-	-- Gender varchar(10) CHECK (Gender IN ('Male','Female'))
+	Gender varchar(10) not null CHECK (Gender IN ('Male','Female')),
 	Date_of_Birth date not null,
 	Address varchar(100) not null,
 	Room_ID int not null,
@@ -65,7 +64,7 @@ create table Care_For
 
 create table Doctor
 (
-	Doctor_ID int not null,
+	Doctor_ID int identity(1,1) not null,
 	First_Name varchar(25) not null,
 	Last_Name varchar(25) not null,
 	Specialization varchar(150)  not null,
@@ -87,11 +86,10 @@ create table Treat
 
 create table Bill
 (
-	Bill_ID int not null,
+	Bill_ID int identity(1,1) not null,
 	Total_Amount decimal(10,2) not null,
 	Date DATE not null,
-	Status varchar(10) not null,
-	-- Status varchar(10) CHECK (Status IN ('Paid','Unpaid','Pending'))
+	Status varchar(10) not null CHECK (Status IN ('Paid','Unpaid','Pending')),
 	Patient_ID int not null,
 	PRIMARY KEY (Bill_ID),
 	FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID)
@@ -99,7 +97,7 @@ create table Bill
 
 create table Appointment
 (
-	Appointment_ID int not null,
+	Appointment_ID int identity(1,1) not null,
 	Date date not null,
 	Time time not null,
 	Diagnosis varchar(250) not null,
@@ -110,7 +108,7 @@ create table Appointment
 
 create table Medicine
 (
-	Medicine_ID int not null,
+	Medicine_ID int identity(1,1) not null,
 	Name varchar(50) not null,
 	Quantity_in_Stock int not null,
 	Price decimal(10,2) not null,
@@ -127,28 +125,3 @@ create table Prescribed_To
 	FOREIGN KEY (Medicine_ID) REFERENCES Medicine(Medicine_ID),
 	PRIMARY KEY (Patient_ID, Medicine_ID)
 );
-
-/*
-	--SELECT NAME FROM SYS.TABLES
-	select * from Department
-	select * from Nurse
-	select * from Room
-	select * from Patient
-	select * from Patient_Phone
-	select * from Care_For
-	select * from Doctor
-	select * from Treat
-	select * from Bill
-	select * from Appointment
-	select * from Medicine
-	select * from Prescribed_To
-*/
-
-
-/*
-use master
-go
-
-drop database HOSPITAL
-drop database company
-*/
